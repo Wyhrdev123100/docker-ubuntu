@@ -1,0 +1,27 @@
+FROM --platform=linux/amd64 ubuntu:22.04
+
+# Thiết lập chế độ không tương tác để tránh bị dừng khi build
+ENV DEBIAN_FRONTEND=noninteractive
+
+# 1. Cập nhật và cài đặt các công cụ dòng lệnh cơ bản (giống pkg trong Termux)
+RUN apt update && apt install -y --no-install-recommends \
+    sudo \
+    vim \
+    curl \
+    wget \
+    git \
+    net-tools \
+    ca-certificates \
+    build-essential \
+    bash-completion \
+    && apt clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# 2. Thiết lập thư mục làm việc mặc định
+WORKDIR /root
+
+# 3. Chỉnh sửa Bash để có màu sắc và giao diện chuyên nghiệp hơn
+RUN echo "export PS1='\[\e[32m\][Termux-Docker]\[\e[m\] \[\e[34m\]\w\[\e[m\] \$ '" >> /root/.bashrc
+
+# Mặc định chạy Bash shell khi container khởi động
+CMD ["/bin/bash"]
