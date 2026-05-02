@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  terminal:
+    build: .
+    container_name: rainway-terminal-24h
+    ports:
+      - "7681:7681"
+    environment:
+      - USERNAME=root
+      - PASSWORD=root123
+      - PORT=7681
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - ./apps:/root/apps
+      - ./logs:/root/logs
+      - ./data:/root/data
+    restart: always
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:7681"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    networks:
+      - rainway-net
+
+networks:
+  rainway-net:
+    driver: bridge
