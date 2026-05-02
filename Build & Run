@@ -1,0 +1,14 @@
+# Build image
+docker build -t rainway-terminal:latest .
+
+# Run container
+docker run -d \
+  --name rainway-24h \
+  -p 7681:7681 \
+  -e USERNAME=root \
+  -e PASSWORD=root123 \
+  --restart always \
+  rainway-terminal:latest
+
+# Hoặc dùng docker-compose
+docker-compose up -d
