@@ -8,5 +8,8 @@ RUN apt update && apt install -y --no-install-recommends \
 
 WORKDIR /root
 
-# Railway sử dụng biến $PORT nên ta phải dùng nó trong lệnh chạy
-CMD ttyd -p $PORT -a bash
+# USER:PASS (đổi tùy bạn)
+ENV USERNAME=root
+ENV PASSWORD=root123
+
+CMD ttyd -p $PORT -c ${USERNAME}:${PASSWORD} bash
